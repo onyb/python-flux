@@ -13,8 +13,7 @@ class Counter(Store):
 
     @staticmethod
     def reduce(state, action):
-        """Pure function containing to return the updated state, based on the action.
-        """
+        """Pure function containing to return the updated state based on the action."""
         if action['type'] == 'INCREMENT':
             return state + 1
         else:
