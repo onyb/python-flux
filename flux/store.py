@@ -3,7 +3,7 @@ from .dispatcher import Dispatcher
 
 class Store(object):
     _state = None
-    __listeners = []
+    _listeners = []
 
     @classmethod
     def get_state(cls):
@@ -11,16 +11,20 @@ class Store(object):
 
     @classmethod
     def add_listener(cls, callback):
-        cls.__listeners.append(callback)
+        cls._listeners.append(callback)
+
+        Dispatcher.register(
+            cls.get_update_hook()
+        )
 
     @classmethod
     def emit_change_event(cls):
-        for listener in cls.__listeners:
+        for listener in cls._listeners:
             listener()
 
     @classmethod
     def remove_listener(cls, callback):
-        cls.__listeners.remove(callback)
+        cls._listeners.remove(callback)
 
     @staticmethod
     def reduce(state, action):
@@ -36,20 +40,3 @@ class Store(object):
                 cls.emit_change_event()
 
         return f
-
-
-class Counter(Store):
-    _state = 0
-
-    @staticmethod
-    def reduce(state, action):
-        if action.type == 'INCREMENT':
-            return state + 1
-        else:
-            return state
-
-
-for store in Store.__subclasses__():
-    Dispatcher.register(
-        store.get_update_hook()
-    )

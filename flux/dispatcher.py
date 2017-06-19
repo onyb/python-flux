@@ -3,7 +3,8 @@ class Dispatcher(object):
 
     @classmethod
     def register(cls, callback):
-        cls.callbacks.append(callback)
+        if callback not in cls.callbacks:
+            cls.callbacks.append(callback)
 
     @classmethod
     def unregister(cls, callback):
@@ -12,7 +13,9 @@ class Dispatcher(object):
     @classmethod
     def dispatch(cls, action):
         for callback in cls.callbacks:
+            print(cls.callbacks)
             callback(action)
+
 
 
 dispatch = Dispatcher.dispatch
