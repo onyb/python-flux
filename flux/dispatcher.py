@@ -1,10 +1,10 @@
 class Dispatcher(object):
-    callbacks = []
+    callbacks = set()
 
     @classmethod
     def register(cls, callback):
         if callback not in cls.callbacks:
-            cls.callbacks.append(callback)
+            cls.callbacks.add(callback)
 
     @classmethod
     def unregister(cls, callback):

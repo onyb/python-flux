@@ -3,7 +3,7 @@ from .dispatcher import Dispatcher
 
 class Store(object):
     _state = None
-    _listeners = []
+    _listeners = set()
 
     @classmethod
     def get_state(cls):
@@ -11,11 +11,12 @@ class Store(object):
 
     @classmethod
     def add_listener(cls, callback):
-        cls._listeners.append(callback)
+        if callback not in cls._listeners:
+            cls._listeners.add(callback)
 
-        Dispatcher.register(
-            cls.get_update_hook()
-        )
+            Dispatcher.register(
+                cls.get_update_hook()
+            )
 
     @classmethod
     def emit_change_event(cls):
