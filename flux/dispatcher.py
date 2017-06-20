@@ -13,9 +13,6 @@ class Dispatcher(object):
     @classmethod
     def dispatch(cls, action):
         for callback in cls.callbacks:
-            print(cls.callbacks)
             callback(action)
-
-
 
 dispatch = Dispatcher.dispatch
