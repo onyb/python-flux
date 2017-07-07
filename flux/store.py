@@ -14,9 +14,7 @@ class Store(object):
         if callback not in cls._listeners:
             cls._listeners.add(callback)
 
-            Dispatcher.register(
-                cls.get_update_hook()
-            )
+            Dispatcher.register(cls)
 
     @classmethod
     def emit_change_event(cls):

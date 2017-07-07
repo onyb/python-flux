@@ -13,6 +13,6 @@ class Dispatcher(object):
     @classmethod
     def dispatch(cls, action):
         for callback in cls.callbacks:
-            callback(action)
+            callback.get_update_hook()(action)
 
 dispatch = Dispatcher.dispatch
